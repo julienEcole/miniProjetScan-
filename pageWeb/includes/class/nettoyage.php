@@ -1,17 +1,17 @@
 <?php
-
+	//TOMODIFY
 	include ("HFSQL.php");
 
 	class nettoyage{
 		private $_bdd = NULL;		//mon HFSQL
-		private $_tables = array();	//la liste contenant toutes mes tables de façon ordonné array(nomTable => array('tableMere' => nomTableMere, nomClefPrimaire => Id, nbLignes => 0), laSuite)
+		private $_tables = array();	//la liste contenant toutes mes tables de faï¿½on ordonnï¿½ array(nomTable => array('tableMere' => nomTableMere, nomClefPrimaire => Id, nbLignes => 0), laSuite)
 		private $_idCompany = "";	//l'ID de la company que je vais traiter plus tard
 
 		public function __construct($Serveur,$Bdd = "test",$Utilisateur = "root",$mdp = ""){
 			$this->_bdd = new HFSQL($Serveur,$Bdd,$Utilisateur,$mdp);
 		}
 
-		public function AjouterTables($tables,$tableMere = "Company",$nomClefPrimaire = "Id"){ //changer Company par la table principale a laquel toutes les autres sont reliés, a voir si  possible de le mettre dans setter
+		public function AjouterTables($tables,$tableMere = "Company",$nomClefPrimaire = "Id"){ //changer Company par la table principale a laquel toutes les autres sont reliï¿½s, a voir si  possible de le mettre dans setter
 			if((!isset($this->_tables[$tables]))){
 				$this->_tables[$tables] = array("tableMere" => $tableMere,"nomClefPrimaire" => $nomClefPrimaire, "nbLignes" => 0);
 			}
@@ -24,13 +24,13 @@
 			}
 		}
 
-		public function __get($value){	//a voir si on doit garder, permet de voir les donnés privés sas les modifier (voir __set pour modif)
+		public function __get($value){	//a voir si on doit garder, permet de voir les donnï¿½s privï¿½s sas les modifier (voir __set pour modif)
 			return $this->$value;
 		}
 
-		public function __set($name,$value){//mon setter de mes différents attributs
+		public function __set($name,$value){//mon setter de mes diffï¿½rents attributs
 			switch ($name) {
-				case '_idCompany':	//opérationnel, peut être a changer car pas le bon procédé mais résultat équivalent
+				case '_idCompany':	//opï¿½rationnel, peut ï¿½tre a changer car pas le bon procï¿½dï¿½ mais rï¿½sultat ï¿½quivalent
 					$this->_idCompany = $this->getCompany($value); 
 					break;
 				default:
@@ -102,7 +102,7 @@
 				else{
 					$sqlCommande = "SELECT COUNT(*) FROM ".	
 						$this->_bdd->_nomBdd.".dbo.$nomTable
-						WHERE ".$this->_bdd->_nomBdd.".dbo.$nomTable.Company = '$this->_idCompany'";//commande direct opérationnel
+						WHERE ".$this->_bdd->_nomBdd.".dbo.$nomTable.Company = '$this->_idCompany'";//commande direct opï¿½rationnel
 				}
 				
 				$result[$nomTable] = $this->executerCommande($sqlCommande);
@@ -111,10 +111,10 @@
 			return $result; //renverra un tableau de la forme array($nomDeLaTable => $nombreDeLigne)
 		}
 
-		public function getNbLignesRemoved($removed = 1){	//operationnel fortement similaire avec la précedente optimisation possible
+		public function getNbLignesRemoved($removed = 1){	//operationnel fortement similaire avec la prï¿½cedente optimisation possible
 			$result = array();
 			$this->resetNbLigne();
-			foreach($this->_tables as $nomTable => $value){	//ajouter condition pour savoir si on a table company qui ne doit pas être regardé mais seras dans la liste
+			foreach($this->_tables as $nomTable => $value){	//ajouter condition pour savoir si on a table company qui ne doit pas ï¿½tre regardï¿½ mais seras dans la liste
 				
 				if($value['tableMere'] != "Company"){
 					$sqlCommande = "SELECT COUNT(*)
@@ -131,7 +131,7 @@
 					$sqlCommande = "SELECT COUNT(*) FROM ".
 						$this->_bdd->_nomBdd.".dbo.$nomTable
 						WHERE ".$this->_bdd->_nomBdd.".dbo.$nomTable.Company = '$this->_idCompany' and ".
-						$this->_bdd->_nomBdd.".dbo.$nomTable.Removed = $removed";//commande direct opérationnel
+						$this->_bdd->_nomBdd.".dbo.$nomTable.Removed = $removed";//commande direct opï¿½rationnel
 				}
 				
 				$result[$nomTable] = $this->executerCommande($sqlCommande);
@@ -140,9 +140,9 @@
 			return $result;	//renverra un tableau de la forme array($nomDeLaTable => $nombreDeLigneAvecRemoved,...)
 		}
 
-		public function suppLignes($removed = 1){// TODO quand je ferai le formulaire de dévalidaion il faudras modifier cet fonction
+		public function suppLignes($removed = 1){// TODO quand je ferai le formulaire de dï¿½validaion il faudras modifier cet fonction
 			$result = $this->getNbLignesRemoved($removed);
-			$this->_bdd->_SQLPointer->beginTransaction();		//jusque la la fonction semble sûr
+			$this->_bdd->_SQLPointer->beginTransaction();		//jusque la la fonction semble sï¿½r
 			
 			
 			
@@ -164,7 +164,7 @@
 						$sqlCommande = "DELETE FROM ".
 							$this->_bdd->_nomBdd.".dbo.$nomTable
 							WHERE ".$this->_bdd->_nomBdd.".dbo.$nomTable.Company = '$this->_idCompany' and ".
-							$this->_bdd->_nomBdd.".dbo.$nomTable.Removed = $removed";//commande direct opérationnel
+							$this->_bdd->_nomBdd.".dbo.$nomTable.Removed = $removed";//commande direct opï¿½rationnel
 					}
 					//echo("$sqlCommande <br/>");
 				}
@@ -176,12 +176,12 @@
 			}
 			
 			$this->_bdd->_SQLPointer->commit();
-			return $result;					//array ($nomTables => $nbLignesSuppriméParLOperation,...	)
+			return $result;					//array ($nomTables => $nbLignesSupprimï¿½ParLOperation,...	)
 		}
 
-		public function suppTout(){// TODO quand je ferai le formulaire de dévalidaion il faudras modifier cet fonction
+		public function suppTout(){// TODO quand je ferai le formulaire de dï¿½validaion il faudras modifier cet fonction
 			$result = $this->getNbLignes();
-			$this->_bdd->_SQLPointer->beginTransaction();		//jusque la la fonction semble sûr
+			$this->_bdd->_SQLPointer->beginTransaction();		//jusque la la fonction semble sï¿½r
 			
 			
 			
@@ -201,7 +201,7 @@
 					else{
 						$sqlCommande = "DELETE FROM ".
 							$this->_bdd->_nomBdd.".dbo.$nomTable
-							WHERE ".$this->_bdd->_nomBdd.".dbo.$nomTable.Company = '$this->_idCompany'";//commande direct opérationnel
+							WHERE ".$this->_bdd->_nomBdd.".dbo.$nomTable.Company = '$this->_idCompany'";//commande direct opï¿½rationnel
 					}
 					//echo("$sqlCommande <br/>");
 				}
@@ -210,10 +210,10 @@
 			}
 			
 			$this->_bdd->_SQLPointer->commit();
-			return $result;					//array ($nomTables => $nbLignesSuppriméParLOperation,...	)
+			return $result;					//array ($nomTables => $nbLignesSupprimï¿½ParLOperation,...	)
 		}
 
-		public function afficheTableau(){	//opérationnel
+		public function afficheTableau(){	//opï¿½rationnel
 			echo("<table>");
 			echo("<tr> <td>Nom de la table </td>
 				<td> Nom de la table Mere </td>
