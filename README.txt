@@ -3,4 +3,4 @@ patient.
 
 Dans un premier temps il faut finir la création de la BDD (diagrame + toutes les talbes fonctionnel et possiblement vide)
 
-Dans un second temps commencer a développer 
+Dans un second temps commencer a développer la récupération des infos utile, l'affichage des différetes infos 

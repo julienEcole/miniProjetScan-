@@ -5,7 +5,7 @@ class HFSQL{
     private $_nomServeur; //l'attribut contenant le nom de ma machine
     private $_mdp; //mot de passe de l'utilisateur de ma base
     private $_nomUtilisateur; //nom d'utilisateur de ma base
-	private $_SQLPointer;	//mon BDO
+	private $_SQLPointer;	//mon PDO
 	private $_ressource;
 
     public function __construct($Serveur,$Bdd = "test",$Utilisateur = "root",$mdp = ""){ //mon constructeur v�rifi�
@@ -25,7 +25,7 @@ class HFSQL{
 					$this->_SQLPointer->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				}
 				catch(PDOexception $e){	//en cas d'erreur on est sense avoir un message
-					echo ("Erreur e : ".$e->getMessage()."<br />La connexion a la BDD a echoue, ve rifiez vos arguments <br />");
+					echo ("Erreur e : ".$e->getMessage()."<br />La connexion a la BDD a echoue, verifiez vos arguments <br />");
 				}
 			}
 			else{

@@ -7,6 +7,10 @@
         <link rel="stylesheet" href="includes/miseEnForme/style.css" type="text/css"/>
         <title>Formulaire de connexion PHP/MySQL</title>
     </head>
+    <nav>
+        <a href="index.php"></a>
+        <!-- TODO -->
+    </nav>
     <body>
         <?php 
             if(isset($_GET['error'])){
