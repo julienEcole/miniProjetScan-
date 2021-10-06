@@ -1,6 +1,6 @@
 <html>
     <?php 
-        session_start(); 
+        session_start();
     ?>
     <head>  
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -27,16 +27,12 @@
                 }
             }
         ?>
-        <h1 id="titreConnexion">Connexion</h1>
-        <form method="post" action="includes/connexion.php">
-            <?php
-                if(!isset($_SESSION['serveur']) || !isset($_SESSION['database']) || !isset($_SESSION['user'])){
-                    header("Location : includes/connexion.php")
-                }
-                else{
-                    echo("<input type=\"submit\" value=\"Connexion\" />");
-                }
-            ?>
-        </form>
+        <?php
+            if(!isset($_SESSION['serveur']) || !isset($_SESSION['database']) || !isset($_SESSION['user'])){
+                header("Location : includes/connexion.php")
+            }
+            else{
+            }
+        ?>
     </body>
 </html>
