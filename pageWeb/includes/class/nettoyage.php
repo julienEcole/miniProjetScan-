@@ -51,9 +51,11 @@
 			}
 			catch(PDOException $e){
 				echo ("Erreur : ".$e->getMessage()."<br />");
+				$this->_bdd->_SQLPointer->rollBack();
 			}
 			catch(Exeption $e){
 				echo ("Erreur : ".$e->getMessage()."<br />");
+				$this->_bdd->_SQLPointer->rollBack();
 			}
 
 			$result = $this->_bdd->_ressource->fetch();
@@ -96,7 +98,7 @@
 						$this->_bdd->_nomBdd.".dbo.".$value['tableMere'].
 						" WHERE  ".
 						"$nomTable.".$value['nomClefPrimaire']." = ".$value['tableMere'].".Id".
-						" and ".
+						" AND ".
 						$value['tableMere'].".Company = '".$this->_idCompany."'";//commande indirect
 				}
 				else{
@@ -123,8 +125,8 @@
 						$this->_bdd->_nomBdd.".dbo.".$value['tableMere'].
 						" WHERE  ".
 						"$nomTable.".$value['nomClefPrimaire']." = ".$value['tableMere'].".Id".
-						" and ".
-						$value['tableMere'].".Company = '".$this->_idCompany."' and ".
+						" AND ".
+						$value['tableMere'].".Company = '".$this->_idCompany."' AND ".
 						$this->_bdd->_nomBdd.".dbo.$nomTable.Removed = $removed";//commande indirect
 				}
 				else{
